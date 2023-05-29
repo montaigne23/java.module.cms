@@ -22,6 +22,7 @@ public class Main {
         boolean isFirst = false;
         Scanner answer = new Scanner(System.in);
         boolean process = true;
+
         while (process) {
             if (isFirst) {
                 serviceApplication.startSetup();
@@ -46,6 +47,7 @@ public class Main {
                         break;
                 }
             }
+
             if (!isFirst) {
                 serviceApplication.menuSetup();
                 System.out.print("entrez un nombre : ");
@@ -84,7 +86,7 @@ public class Main {
                     case "3":
                         serviceApplication.createShow("Choisir une application pour continuer");
                         if (applicationList.isEmpty()) {
-                            serviceApplication.createShow1("Rien pour l'instant");
+                            serviceApplication.createShow1("Aucune application pour l'instant");
                             answer.nextLine();
                         } else {
                             long _indexCount = applicationList.stream().count();
@@ -99,17 +101,17 @@ public class Main {
                             do {
 
                                 String ans = answer.nextLine();
-                                switch (ans){
+                                switch (ans) {
                                     case "*":
                                         isQuit = true;
                                         break;
                                     default:
                                         try {
                                             _ans = Long.parseLong(ans);
-                                            if(_ans > _indexCount-1){
+                                            if (_ans > _indexCount - 1) {
                                                 serviceApplication.createShow1("Commande incorrect");
-                                            }else {
-                                                break;
+                                            } else {
+                                                isQuit = true;
                                             }
                                         } catch (NumberFormatException e) {
                                             serviceApplication.createShow1("Commande incorrect");
@@ -117,12 +119,62 @@ public class Main {
                                         break;
                                 }
 
-                            } while (_ans > _indexCount-1 || !isQuit);
+                            } while (!isQuit);
                         }
+                        break;
+                    case "4":
+                        serviceApplication.createShow("Choisir une application pour continuer");
+                        if (applicationList.isEmpty()) {
+                            serviceApplication.createShow1("Aucune application pour l'instant");
+                            answer.nextLine();
+                        } else {
+                            long _indexCount = applicationList.stream().count();
+                            long indexChoice = 999999999;
+                            int index = 0;
+                            for (entityModel application : applicationList) {
+                                System.out.println(index + " : " + application.getTitle());
+                                index++;
+                            }
+                            System.out.println("tape * to return");
+                            long _ans = 99999999;
+                            boolean isQuit = false;
+                            do {
+
+                                String ans = answer.nextLine();
+                                switch (ans) {
+                                    case "*":
+                                        isQuit = true;
+                                        break;
+                                    default:
+                                        try {
+                                            _ans = Long.parseLong(ans);
+                                            if (_ans > _indexCount - 1) {
+                                                serviceApplication.createShow1("Commande incorrect");
+                                            } else {
+                                                indexChoice = _ans;
+                                                isQuit = true;
+                                            }
+                                        } catch (NumberFormatException e) {
+                                            serviceApplication.createShow1("Commande incorrect");
+                                        }
+                                        break;
+                                }
+
+                            } while (!isQuit);
+
+                            if (indexChoice != 999999999){
+
+                            }
+                        }
+                        break;
+                    case "q":
+                        System.out.println("baye baye !!!");
+                        process = false;
                         break;
                     default:
                         serviceApplication.createShow1("Commande invalide");
-                        answer.nextLine();
+//                        System.out.print("entrez un nombre : ");
+//                        texte = answer.nextLine();
                         break;
                 }
                 // System.out.println(texte);

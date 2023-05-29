@@ -22,6 +22,7 @@ public class serviceApplication {
         System.out.println("        3 - Consulter les vues d'une application");
         System.out.println("        4 - Consulter les pages d'une application");
         System.out.println("        5 - Consulter les composants d'une application");
+        System.out.println("         Tapez q pour quitter ");
         System.out.println("               ");
 
     }
