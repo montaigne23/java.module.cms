@@ -97,17 +97,27 @@ public class Main {
                             long _ans = 99999999;
                             boolean isQuit = false;
                             do {
-                                try{
-                                    String ans = answer.nextLine();
-                                    if(ans == "*"){
+
+                                String ans = answer.nextLine();
+                                switch (ans){
+                                    case "*":
                                         isQuit = true;
-                                    }else {
-                                        _ans = Long.parseLong(ans);
-                                    }
-                                }catch (NumberFormatException e){
-                                    serviceApplication.createShow1("Commande incorrect");
+                                        break;
+                                    default:
+                                        try {
+                                            _ans = Long.parseLong(ans);
+                                            if(_ans > _indexCount-1){
+                                                serviceApplication.createShow1("Commande incorrect");
+                                            }else {
+                                                break;
+                                            }
+                                        } catch (NumberFormatException e) {
+                                            serviceApplication.createShow1("Commande incorrect");
+                                        }
+                                        break;
                                 }
-                            }while (_ans > _indexCount||isQuit);
+
+                            } while (_ans > _indexCount-1 || !isQuit);
                         }
                         break;
                     default:
