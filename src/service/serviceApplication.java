@@ -2,6 +2,7 @@ package service;
 
 import library.utilities.eav.models.entityModel;
 import models.applicationModel;
+import models.nestedComponentModel;
 
 
 public class serviceApplication {
@@ -49,31 +50,121 @@ public class serviceApplication {
         System.out.println("               ");
         System.out.println("               ");
     }
+
     public static void createShow(String title) {
         System.out.println("               ");
         System.out.println("********************************");
-        System.out.println(""+title);
+        System.out.println("" + title);
         System.out.println("********************************");
         System.out.println("               ");
     }
+
     public static void createShow1(String title) {
-        System.out.println(">>>>>> "+title);
+        System.out.println(">>>>>> " + title);
     }
 
-    public static void showApplicationDetail(applicationModel application){
+    public static void showApplicationDetail(applicationModel application) {
         createShow("Application detail");
-        System.out.println("Slug : "+application.getSlug());
-        System.out.println("Title : "+application.getTitle());
-        System.out.println("Description : "+application.getDescription());
+        System.out.println("Slug : " + application.getSlug());
+        System.out.println("Title : " + application.getTitle());
+        System.out.println("Description : " + application.getDescription());
         createShow(" Pages");
-        if(application.getPageModelList().isEmpty()){
+        if (application.getPageModelList().isEmpty()) {
             createShow1("Rien pour l'instant");
-        }else {
+        } else {
             int index = 0;
-            for (entityModel page: application.getPageModelList()) {
-                System.out.println(index+" : " + page.getTitle());
+            for (entityModel page : application.getPageModelList()) {
+                System.out.println(index + " : " + page.getTitle());
+                index++;
+            }
+        }
+        createShow(" Vues");
+        if (application.getViewModelList().isEmpty()) {
+            createShow1("Rien pour l'instant");
+        } else {
+            int index = 0;
+            for (entityModel page : application.getViewModelList()) {
+                System.out.println(index + " : " + page.getTitle());
+                index++;
+            }
+        }
+        createShow(" Composant");
+        if (application.getComponentInPageModelList().isEmpty()) {
+            createShow1("Rien pour l'instant");
+        } else {
+            int index = 0;
+            for (nestedComponentModel page : application.getComponentInPageModelList()) {
+                System.out.println(index + " : " + page.getStartDate());
+                index++;
+            }
+        }
+        createShow("Attributs");
+        if (application.getSattributeSetModelList().isEmpty()) {
+            createShow1("Rien pour l'instant");
+        } else {
+            int index = 0;
+            for (entityModel page : application.getSattributeSetModelList()) {
+                System.out.println(index + " : " + page.getTitle());
                 index++;
             }
         }
     }
+
+    public static void showApplicationOptionDetail(applicationModel application, String type) {
+       // createShow("Application detail");
+        System.out.println("Slug : " + application.getSlug());
+        System.out.println("Title : " + application.getTitle());
+        System.out.println("Description : " + application.getDescription());
+        switch (type) {
+            case "pages":
+                createShow(" Pages");
+                if (application.getPageModelList().isEmpty()) {
+                    createShow1("Rien pour l'instant");
+                } else {
+                    int index = 0;
+                    for (entityModel page : application.getPageModelList()) {
+                        System.out.println(index + " : " + page.getTitle());
+                        index++;
+                    }
+                }
+                break;
+            case "vues":
+                createShow(" Vues");
+                if (application.getViewModelList().isEmpty()) {
+                    createShow1("Rien pour l'instant");
+                } else {
+                    int index = 0;
+                    for (entityModel page : application.getViewModelList()) {
+                        System.out.println(index + " : " + page.getTitle());
+                        index++;
+                    }
+                }
+                break;
+            case "composants":
+                createShow(" Composants");
+                if (application.getComponentInPageModelList().isEmpty()) {
+                    createShow1("Rien pour l'instant");
+                } else {
+                    int index = 0;
+                    for (nestedComponentModel page : application.getComponentInPageModelList()) {
+                        System.out.println(index + " : " + page.getStartDate());
+                        index++;
+                    }
+                }
+                break;
+            case "Attributs":
+                createShow("Attributs");
+                if (application.getSattributeSetModelList().isEmpty()) {
+                    createShow1("Rien pour l'instant");
+                } else {
+                    int index = 0;
+                    for (entityModel page : application.getSattributeSetModelList()) {
+                        System.out.println(index + " : " + page.getTitle());
+                        index++;
+                    }
+                }
+                break;
+        }
+    }
+
 }

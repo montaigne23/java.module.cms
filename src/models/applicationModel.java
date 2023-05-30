@@ -3,12 +3,11 @@ package models;
 import library.utilities.eav.models.attributeSetModel;
 import library.utilities.eav.models.entityModel;
 import library.utilities.eav.models.userModel;
+import service.serviceApplication;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
-import java.util.UUID;
 
 public class applicationModel implements seoDataModel, entityModel {
     private UUID id;
@@ -33,6 +32,7 @@ public class applicationModel implements seoDataModel, entityModel {
         this.viewModelList = new ArrayList<>();
         this.pageModelList = new ArrayList<>();
         this.componentInPageModelList = new ArrayList<>();
+        this.sattributeSetModelList = new ArrayList<>();
     }
     public void addAttributesSet(attributeSetModel attributeSet) {
         this.sattributeSetModelList.add(attributeSet);
@@ -80,7 +80,81 @@ public class applicationModel implements seoDataModel, entityModel {
     }
 
 
+    public void showAllView(){
+       int index = 0;
+        for (viewModel view: this.viewModelList) {
+            System.out.println("        " +index + view.getTitle());
+        }
+    }
 
+    public void showAppMenu(){
+        serviceApplication.showApplicationDetail(this);
+        System.out.println("Que souhaitez vous faire.");
+        System.out.println("               ");
+        System.out.println("        1 - Ajouter, consulter ou supprimer une Vue");
+        System.out.println("        2 - Ajouter, consulter ou supprimer un composant");
+        System.out.println("        3 - Ajouter, consulter ou supprimer une page");
+        System.out.println("        4 - Ajouter, consulter ou supprimer un attribut");
+        System.out.println("         Tapez q pour quitter ");
+        System.out.println("         Tapez s pour supprimer ");
+        System.out.println("               ");
+    }
+    public boolean manageApplication(){
+        Scanner answer = new Scanner(System.in);
+        showAppMenu();
+        String res;
+        boolean isTrue = true;
+        boolean isDeleted = false;
+        while (isTrue){
+            System.out.print("Entrez votre reponse : ");
+            res = answer.nextLine();
+            switch (res){
+                case "1":
+                    isTrue = false;
+
+                    break;
+                case "2":
+                    isTrue = false;
+                    break;
+                case "3":
+                    isTrue = false;
+                    break;
+                case "4":
+                    isTrue = false;
+                    break;
+                case "q":
+                    isTrue = false;
+
+                    break;
+                case "s" :
+                   serviceApplication.createShow1("Voulez vous vraiment supprimer cette App ? yes/no");
+                   System.out.print(" : ");
+                   res = answer.nextLine();
+                   boolean isShooce = true;
+                   while (isShooce){
+                       switch (res){
+                           case "yes":
+                               isDeleted = true;
+                               isTrue = false;
+                               isShooce = false;
+                               break;
+                           case "no":
+                               isShooce = false;
+                               showAppMenu();
+                               break;
+                           default:
+                               break;
+                       }
+                   }
+                    isDeleted = true;
+                    break;
+                default:
+                    serviceApplication.createShow1("Commande invalide");
+                    break;
+            }
+        }
+        return isDeleted;
+    }
     @Override
     public void setId(UUID slug) {
         this.id = id;
