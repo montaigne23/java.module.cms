@@ -23,7 +23,7 @@ public class applicationModel implements seoDataModel, entityModel {
 
     private Image logo;
     private String slogan;
-    private List<viewModel> viewModelList;
+    private List<entityModel> viewModelList;
     private List<pageModel> pageModelList;
     private List<componentInPageModel> componentInPageModelList;
     private List<attributeSetModel> sattributeSetModelList;
@@ -45,7 +45,7 @@ public class applicationModel implements seoDataModel, entityModel {
     public List<pageModel> getPageModelList(){
         return pageModelList;
     }
-    public List<viewModel> getViewModelList(){
+    public List<entityModel> getViewModelList(){
         return viewModelList;
     }
     public List<componentInPageModel> getComponentInPageModelList(){
@@ -82,7 +82,7 @@ public class applicationModel implements seoDataModel, entityModel {
 
     public void showAllView(){
        int index = 0;
-        for (viewModel view: this.viewModelList) {
+        for (entityModel view: this.viewModelList) {
             System.out.println("        " +index + view.getTitle());
         }
     }
@@ -99,7 +99,7 @@ public class applicationModel implements seoDataModel, entityModel {
         System.out.println("         Tapez s pour supprimer ");
         System.out.println("               ");
     }
-    public boolean manageApplication(){
+    public boolean manageApplication(userModel user){
         Scanner answer = new Scanner(System.in);
         showAppMenu();
         String res;
@@ -110,21 +110,197 @@ public class applicationModel implements seoDataModel, entityModel {
             res = answer.nextLine();
             switch (res){
                 case "1":
-                    isTrue = false;
+                    serviceApplication.createShow("CRUD VUES");
+                    if (viewModelList.isEmpty()){
+                        serviceApplication.createShow1("Aucune vue disponible");
+                        System.out.println("    c - pour creer ");
+                        System.out.println("    * - pour retourner ");
+                        boolean isAnsVue = true;
+                        while (isAnsVue){
+                            res = answer.nextLine();
+                            switch (res){
 
+                                case "c":
+                                    serviceApplication.createShow("Create New View");
+                                    entityModel newView = new viewModel();
+                                    System.out.print("    entrer le title : ");
+                                    res = answer.nextLine();
+                                    newView.setTitle(res);
+                                    System.out.print("    entrer la description : ");
+                                    res = answer.nextLine();
+                                    newView.setTitle(res);
+                                    newView.setCreatedBy(user);
+                                    newView.setCreatedAt(new Date());
+                                    newView.setUpdatedAt(new Date());
+                                    newView.setUpdatedBy(user);
+                                    serviceApplication.createShow1("Voulez vous enregistrer cette nouvelle Vue ? y/n");
+                                    boolean isStatus = true;
+                                    while (isStatus) {
+                                        System.out.print("Entrez votre reponse : ");
+                                        res = answer.nextLine();
+                                        switch (res) {
+                                            case "y":
+                                                System.out.println(" ");
+                                                viewModelList.add(newView);
+                                                System.out.println("Vue creee avec succes  : ");
+                                                serviceApplication.createShow1("Taper entrer pour continuer vers le menu pricipale");
+                                                isStatus = false;
+                                                break;
+                                            case "n":
+                                                serviceApplication.createShow1("Tapez entrer pour continuer vers le menu principale : ");
+                                                isStatus = false;
+                                                break;
+                                            default:
+                                                serviceApplication.createShow1("Commande invalide tapez y/n");
+                                                break;
+                                        }
+                                    }
+                                    answer.nextLine();
+                                    showAppMenu();
+                                    isAnsVue = false;
+
+                                    break;
+                                case "*":
+                                    showAppMenu();
+                                    isAnsVue = false;
+                                    break;
+                                default:
+                                    serviceApplication.createShow1("Commande invalide");
+                                    break;
+                            }
+                        }
+
+                    }else{
+                        long _indexCount = viewModelList.stream().count();
+                        int index = 0;
+                        for (entityModel view : viewModelList) {
+                            System.out.println(index + " : " + view.getTitle());
+                            index++;
+                        }
+                        System.out.println("tape c to create");
+                        System.out.println("tape * to return");
+                        int _ans = 99999999;
+                        boolean isQuit = false;
+                        do {
+                            System.out.print("entrez un nombre : ");
+                            String ans = answer.nextLine();
+                            switch (ans) {
+                                case "c":
+                                    serviceApplication.createShow("Create New View");
+                                    entityModel newView = new viewModel();
+                                    System.out.print("    entrer le title : ");
+                                    res = answer.nextLine();
+                                    newView.setTitle(res);
+                                    System.out.print("    entrer la description : ");
+                                    res = answer.nextLine();
+                                    newView.setTitle(res);
+                                    newView.setCreatedBy(user);
+                                    newView.setCreatedAt(new Date());
+                                    newView.setUpdatedAt(new Date());
+                                    newView.setUpdatedBy(user);
+                                    serviceApplication.createShow1("Voulez vous enregistrer cette nouvelle Vue ? y/n");
+                                    boolean isStatus = true;
+                                    while (isStatus) {
+                                        System.out.print("Entrez votre reponse : ");
+                                        res = answer.nextLine();
+                                        switch (res) {
+                                            case "y":
+                                                System.out.println(" ");
+                                                viewModelList.add(newView);
+                                                System.out.println("Vue creee avec succes  : ");
+                                                serviceApplication.createShow1("Taper entrer pour continuer vers le menu pricipale");
+                                                isStatus = false;
+                                                break;
+                                            case "n":
+                                                serviceApplication.createShow1("Tapez entrer pour continuer vers le menu principale : ");
+                                                isStatus = false;
+                                                break;
+                                            default:
+                                                serviceApplication.createShow1("Commande invalide tapez y/n");
+                                                break;
+                                        }
+                                    }
+                                    answer.nextLine();
+                                    showAppMenu();
+                                    isQuit = true;
+                                    break;
+                                case "*":
+                                    showAppMenu();
+                                    isQuit = true;
+                                    break;
+                                default:
+                                    try {
+                                        _ans = Integer.parseInt(ans);
+                                        if (_ans > _indexCount - 1) {
+                                            serviceApplication.createShow1("Commande incorrect");
+                                        } else {
+                                            entityModel _viewModel = (viewModel) viewModelList.get(_ans);
+
+                                            serviceApplication.createShow1(_viewModel.getTitle());
+                                            boolean status = ((viewModel) _viewModel).manageView();
+                                            if (!status) {
+                                                serviceApplication.createShow1("Voulez vous enregistrer les modification ? y/n");
+                                                System.out.print(" : ");
+                                                 res = answer.nextLine();
+                                                boolean isValidate = true;
+                                                while (isValidate) {
+                                                    switch (res) {
+                                                        case "y":
+                                                            viewModelList.set(_ans, _viewModel);
+                                                            serviceApplication.createShow("Vue mise a jour avec succes");
+                                                            answer.nextLine();
+                                                            isValidate = false;
+                                                            break;
+                                                        case "n":
+                                                            serviceApplication.createShow1("Modifications annulees");
+                                                            answer.nextLine();
+                                                            isValidate = false;
+                                                            break;
+                                                        default:
+                                                            serviceApplication.createShow1("Commande invalide");
+                                                            break;
+                                                    }
+                                                }
+                                                answer.nextLine();
+                                                showAppMenu();
+                                                isQuit = true;
+                                            } else {
+                                                viewModelList.remove(_ans);
+                                                serviceApplication.createShow("Vue supprimee avec succes");
+                                                serviceApplication.createShow1("Taper entre pour continuer");
+                                                answer.nextLine();
+                                                showAppMenu();
+                                                isQuit = true;
+
+                                            }
+                                        }
+
+                                    } catch (NumberFormatException e) {
+                                        serviceApplication.createShow1("Commande incorrect");
+                                    }
+                                    break;
+                            }
+
+                        } while (!isQuit);
+                    }
+
+//                    isTrue = false;
                     break;
                 case "2":
+
                     isTrue = false;
                     break;
                 case "3":
+
                     isTrue = false;
                     break;
                 case "4":
+
                     isTrue = false;
                     break;
                 case "q":
-                    isTrue = false;
 
+                    isTrue = false;
                     break;
                 case "s" :
                    serviceApplication.createShow1("Voulez vous vraiment supprimer cette App ? yes/no");
@@ -143,6 +319,7 @@ public class applicationModel implements seoDataModel, entityModel {
                                showAppMenu();
                                break;
                            default:
+                               serviceApplication.createShow1("Commande invalide");
                                break;
                        }
                    }

@@ -144,7 +144,9 @@ public class Main {
         System.out.print("Entrez titre : ");
         res = answer.nextLine();
         newApplication.setTitle(res);
-        newApplication.setSlug(res.replace(" ", "-"));
+        System.out.print("Entrez un slogan : ");
+        res = answer.nextLine();
+        newApplication.setSlug(res);
         System.out.print("Entrez une description : ");
         res = answer.nextLine();
         newApplication.setDescription(res);
@@ -179,7 +181,7 @@ public class Main {
                                 break;
                             case "c":
                                 serviceApplication.createShow(newApplication.getTitle());
-                                newApplication.manageApplication();
+                                newApplication.manageApplication(user);
                                 System.out.println(" ");
                                 applicationList.add(newApplication);
                                 System.out.println("Application creee avec succes  : ");
@@ -187,7 +189,6 @@ public class Main {
                                 break;
                             default:
                                 serviceApplication.createShow1("Commande invalide");
-
                                 break;
                         }
                     }
@@ -238,13 +239,14 @@ public class Main {
                                 applicationModel _applicationModel = (applicationModel) applicationList.get(_ans);
 
                                 serviceApplication.createShow1(_applicationModel.getTitle());
-                                boolean status = _applicationModel.manageApplication();
+                                boolean status = _applicationModel.manageApplication(user);
                                 if (!status) {
                                     serviceApplication.createShow1("Voulez vous enregistrer les modification ? y/n");
                                     System.out.print(" : ");
-                                    String res = answer.nextLine();
+                                    String res;
                                     boolean isValidate = true;
                                     while (isValidate) {
+                                        res = answer.nextLine();
                                         switch (res) {
                                             case "y":
                                                 applicationList.set(_ans, _applicationModel);
