@@ -10,7 +10,7 @@ public interface nestedComponentModel {
     public void setStartDate(Date startDate);
 
     public Date getEndDate();
-    public void setEndDate();
+    public void setEndDate(Date startDate);
     public boolean getVisible();
     public void setVisible(boolean visible);
 }

@@ -16,40 +16,55 @@ public class componentInPageModel implements nestedComponentModel {
     private pageRegionModel pageRegion;
     private componentModel component;
 
-    public componentModel getComponent(){
+    public boolean  manageView() {
+        boolean isDeleted = false;
+
+        return isDeleted;
+    }
+
+    public componentModel getComponent() {
         return component;
     }
-    public void setComponent(componentModel component){
+
+    public void setComponent(componentModel component) {
         this.component = component;
     }
-    public pageRegionModel getPageRegion(){
+
+    public pageRegionModel getPageRegion() {
         return pageRegion;
     }
-    public void setPageRegion(pageRegionModel pageRegion){
+
+    public void setPageRegion(pageRegionModel pageRegion) {
         this.pageRegion = pageRegion;
     }
+
     @Override
-    public Date getStartDate(){
+    public Date getStartDate() {
         return startDate;
     }
+
     @Override
-    public void setStartDate(Date startDate){
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
+
     @Override
-    public Date getEndDate(){
+    public Date getEndDate() {
         return endDate;
     }
+
     @Override
-    public void setEndDate(){
+    public void setEndDate(Date startDate) {
         this.endDate = endDate;
     }
+
     @Override
-    public boolean getVisible(){
+    public boolean getVisible() {
         return visible;
     }
+
     @Override
-    public void setVisible(boolean visible){
+    public void setVisible(boolean visible) {
         this.visible = visible;
     }
 }
